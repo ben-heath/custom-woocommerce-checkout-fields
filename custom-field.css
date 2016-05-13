@@ -1,0 +1,18 @@
+.extra-fields .input-radio {
+    float: left;
+    margin: 10px 10px 0 0;
+}
+.extra-fields p {
+    width: 48%;
+    float: left;
+}
+.extra-fields p:last-child {
+    float: none;
+}
+
+@media screen and (max-width: 760px) {
+	.extra-fields p {
+	    width: 100%;
+	    float: none;
+	}
+}
