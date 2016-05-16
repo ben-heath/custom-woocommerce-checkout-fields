@@ -164,3 +164,25 @@ function sls_save_extra_checkout_fields( $order_id, $posted ){
     }
 }
 add_action( 'woocommerce_checkout_update_order_meta', 'sls_save_extra_checkout_fields', 10, 2 );
+
+//Step 3
+// display the extra data in the order admin panel
+function sls_display_order_data_in_admin( $order ){  ?>
+    <div class="order_data_column">
+        <h4><?php _e( 'Extra Details', 'woocommerce' ); ?></h4>
+        <?php 
+            echo '<p><strong>' . __( 'Skill Rating: ' ) . ':</strong>' . get_post_meta( $order->id, '_skill_rating', true ) . '</p>';
+            echo '<p><strong>' . __( 'Gender: ' ) . ':</strong>' . get_post_meta( $order->id, '_player_gender', true ) . '</p>';
+            echo '<p><strong>' . __( 'Comments: ' ) . ':</strong>' . get_post_meta( $order->id, '_player_comments', true ) . '</p>';
+            echo '<p><strong>' . __( 'Career: ' ) . ':</strong>' . get_post_meta( $order->id, '_player_career', true ) . '</p>';
+            echo '<p><strong>' . __( 'Annual Meeting Volunteer Interest: ' ) . ':</strong>' . get_post_meta( $order->id, '_annual_mtg_volunteer', true ) . '</p>';
+            echo '<p><strong>' . __( 'Board Member Interest: ' ) . ':</strong>' . get_post_meta( $order->id, '_board_member', true ) . '</p>';
+            echo '<p><strong>' . __( 'Tennis Part Volunteer Interest: ' ) . ':</strong>' . get_post_meta( $order->id, '_party_volunteer', true ) . '</p>';
+            echo '<p><strong>' . __( 'Tournament Volunteer: ' ) . ':</strong>' . get_post_meta( $order->id, '_tournament_volunteer', true ) . '</p>';
+            echo '<p><strong>' . __( 'Skills/Hobbies: ' ) . ':</strong>' . get_post_meta( $order->id, '_skill_hobbies', true ) . '</p>';
+            echo '<p><strong>' . __( 'Birthdate: ' ) . ':</strong>' . get_post_meta( $order->id, '_player_birthday', true ) . '</p>';
+            echo '<p><strong>' . __( 'Email in Roster: ' ) . ':</strong>' . get_post_meta( $order->id, '_roster_email_show', true ) . '</p>';
+            ?>
+    </div>
+<?php }
+add_action( 'woocommerce_admin_order_data_after_order_details', 'sls_display_order_data_in_admin' );
