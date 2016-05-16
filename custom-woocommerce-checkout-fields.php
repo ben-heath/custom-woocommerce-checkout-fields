@@ -124,3 +124,43 @@ function sls_extra_checkout_fields(){
 
 <?php }
 add_action( 'woocommerce_checkout_after_customer_details' ,'sls_extra_checkout_fields' );
+// Step 2 of custom checkout fields
+//
+// save the extra fields when checkout is processed
+function sls_save_extra_checkout_fields( $order_id, $posted ){
+    // don't forget appropriate sanitization if you are using a different field type
+    if( isset( $posted['skill_rating'] ) && in_array( $posted['skill_rating'], array( '1_0', '1_5', '2_0', '2_5', '3_0', '3_5', '4_0', '4_5', '5_0', '5_5', '6_0', '6_5', '7_0' ) ) ) {
+        update_post_meta( $order_id, '_skill_rating', $posted['skill_rating'] );
+    }
+    if( isset( $posted['player_gender'] ) && in_array( $posted['player_gender'], array( 'male', 'female' ) ) ) {
+        update_post_meta( $order_id, '_player_gender', $posted['player_gender'] );
+    }
+    if( isset( $posted['player_comments'] ) ) {
+        update_post_meta( $order_id, '_player_comments', sanitize_text_field( $posted['player_comments'] ) );
+    }
+    if( isset( $posted['player_career'] ) ) {
+        update_post_meta( $order_id, '_player_career', sanitize_text_field( $posted['player_career'] ) );
+    }
+    if( isset( $posted['annual_mtg_volunteer'] ) && in_array( $posted['annual_mtg_volunteer'], array( 'yes', 'no' ) ) ) {
+        update_post_meta( $order_id, '_annual_mtg_volunteer', $posted['annual_mtg_volunteer'] );
+    }
+    if( isset( $posted['board_member'] ) && in_array( $posted['board_member'], array( 'yes', 'no' ) ) ) {
+        update_post_meta( $order_id, '_board_member', $posted['board_member'] );
+    }
+    if( isset( $posted['party_volunteer'] ) && in_array( $posted['party_volunteer'], array( 'yes', 'no' ) ) ) {
+        update_post_meta( $order_id, '_party_volunteer', $posted['party_volunteer'] );
+    }
+    if( isset( $posted['tournament_volunteer'] ) && in_array( $posted['tournament_volunteer'], array( 'yes', 'no' ) ) ) {
+        update_post_meta( $order_id, '_tournament_volunteer', $posted['tournament_volunteer'] );
+    }
+    if( isset( $posted['skill_hobbies'] ) ) {
+        update_post_meta( $order_id, '_skill_hobbies', sanitize_text_field( $posted['skill_hobbies'] ) );
+    }
+    if( isset( $posted['player_birthday'] ) ) {
+        update_post_meta( $order_id, '_player_birthday', sanitize_text_field( $posted['player_birthday'] ) );
+    }
+    if( isset( $posted['roster_email_show'] ) && in_array( $posted['roster_email_show'], array( 'yes', 'no' ) ) ) {
+        update_post_meta( $order_id, '_roster_email_show', $posted['roster_email_show'] );
+    }
+}
+add_action( 'woocommerce_checkout_update_order_meta', 'sls_save_extra_checkout_fields', 10, 2 );
